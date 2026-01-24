@@ -1,9 +1,13 @@
-import 'package:news_app/model/hive_model1.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/bloc/bloc_class/HiveBloc.dart';
+import 'package:news_app/bloc/events/HIveEvents.dart';
+import 'package:news_app/bloc/states/HiveState.dart';
+import 'package:news_app/model/local/Hive_Model.dart';
+
 import 'package:news_app/view/detail_screen.dart';
-import 'package:news_app/viewmodel/crud_viewmodel.dart';
+
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
+
 
 class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
@@ -13,78 +17,77 @@ class BookmarkScreen extends StatefulWidget {
 }
 
 class _BookmarkScreenState extends State<BookmarkScreen> {
-  Box? box;
-
-  @override
-  void initState() {
-    box = Hive.box("articles");
-    // TODO: implement initState
-    super.initState();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CrudViewmodel>(
-      builder: (_, vd, _) {
-        List<HiveModel1> list = box!.values.toList().cast<HiveModel1>();
+    return BlocBuilder<Hivebloc, HiveState>(
+      builder: (_, state) {
+        if (state is EmptyState) {
+          return const SizedBox.expand(
+            child: Center(child: Text("You don’t add anything till now")),
+          );
+        } else if (state is LoadItemState) {
+          final List<HiveModel> items = state.data;
 
-        return ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => info_screen(
-                      name: list[index].name ?? "",
-                      author: list[index].author ?? "",
-                      imgurl: list[index].imgurl ?? "",
-                      title: list[index].title ?? "",
-                      desc: list[index].desc ?? "",
-                      content: list[index].content ?? "",
-                      url: list[index].url ?? "",
+          return ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => info_screen(
+                        name: items[index].name ?? "",
+                        author: items[index].author ?? "",
+                        imgurl: items[index].imgurl ?? "",
+                        title: items[index].title ?? "",
+                        desc: items[index].desc ?? "",
+                        content: items[index].content ?? "",
+                        url: items[index].url ?? "",
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: SizedBox(
-                width: double.infinity,
-                height: 120,
-                child: Card(
-                  elevation: 4,
-                  child: SizedBox.expand(
+                  );
+                },
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 120,
+                  child: Card(
+                    elevation: 4,
                     child: Row(
                       children: [
                         Expanded(
                           child: Image.network(
-                            list[index].imgurl ?? "",
+                            items[index].imgurl ?? "",
                             fit: BoxFit.cover,
                           ),
                         ),
-
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            list[index].title ?? "",
-                            style: TextStyle(fontSize: 15),
+                            items[index].title ?? "",
+                            style: const TextStyle(fontSize: 15),
                           ),
                         ),
-
                         IconButton(
                           onPressed: () {
-                            context.read<CrudViewmodel>().deleteitem(index);
+                            context.read<Hivebloc>().add(
+                              DeleteitemEvent(indx: index)
+                            );
                           },
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-            );
-          },
-        );
+              );
+            },
+          );
+        } else {
+          return Container();
+        }
       },
     );
   }

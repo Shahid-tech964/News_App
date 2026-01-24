@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/viewmodel/crud_viewmodel.dart';
+import 'package:news_app/bloc/bloc_class/HiveBloc.dart';
+import 'package:news_app/bloc/events/HIveEvents.dart';
+
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,14 +36,16 @@ class info_screen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.bookmark_border),
             onPressed: () {
-              context.read<CrudViewmodel>().additems(
-                name,
-                author,
-                imgurl,
-                title,
-                desc,
-                content,
-                url,
+              context.read<Hivebloc>().add(
+                AddItemEvent(
+                  name: name,
+                  author: author,
+                  imgurl: imgurl,
+                  title: title,
+                  desc: desc,
+                  content: content,
+                  url: url,
+                ),
               );
             },
           ),

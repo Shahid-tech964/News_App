@@ -1,80 +1,96 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hive_flutter/adapters.dart';
-import 'package:news_app/model/hive_model1.dart';
+import 'package:news_app/bloc/bloc_class/HiveBloc.dart';
+import 'package:news_app/bloc/bloc_class/headlineBloc.dart';
+
+import 'package:news_app/model/local/Hive_Model.dart';
+import 'package:news_app/view/HomeScreen/HomeUI.dart';
 import 'package:news_app/view/bookmark_screen.dart';
-import 'package:news_app/view/homescreen.dart';
-import 'package:news_app/viewmodel/arcticle_viewmodel.dart';
-import 'package:news_app/viewmodel/crud_viewmodel.dart';
-import 'package:provider/provider.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox("articles");
-  Hive.registerAdapter(HiveModel1Adapter());
+  await Hive.openBox<HiveModel>("HiveArticle");
+  Hive.registerAdapter(HiveModelAdapter());
 
-  runApp(Myapp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => Headlinebloc()),
+        BlocProvider(create: (_) => Hivebloc()),
+      ],
+      child: MyWidget(),
+    ),
+  );
 }
 
-class Myapp extends StatefulWidget {
-  const Myapp({super.key});
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
 
   @override
-  State<Myapp> createState() => _MyappState();
+  State<MyWidget> createState() => _MyWidgetState();
 }
 
-class _MyappState extends State<Myapp> {
-  int index = 0;
-  List<Widget> screens = [HomeWidget(), BookmarkScreen()];
-  _MyappState();
+class _MyWidgetState extends State<MyWidget> {
+  _MyWidgetState();
+  int currindx = 0;
+  List<Widget> widgets = [HomeScreen(), BookmarkScreen()];
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => arcticleViewmodel()),
-        ChangeNotifierProvider(create: (context) => CrudViewmodel()),
-      ],
-
-      child: MaterialApp(
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.light(),
-        home: Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: PopScope(
+        canPop: currindx == 0,
+        onPopInvokedWithResult: (_, _) {
+          if (currindx != 0) {
+            setState(() {
+              currindx = 0;
+            });
+          }
+        },
+        child: Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               "News App",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             backgroundColor: Colors.blue,
           ),
+          body: widgets[currindx],
 
-          body: SizedBox.expand(child: screens[index]),
-
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: index,
-            onTap: (ind) {
-              index = ind;
-
-              setState(() {});
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark_outline),
-                label: "BookMark",
-              ),
-            ],
+          bottomNavigationBar: Theme(
+            data: Theme.of(context).copyWith(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: BottomNavigationBar(
+              currentIndex: currindx,
+              onTap: (indx) {
+                setState(() {
+                  currindx = indx;
+                });
+              },
+              backgroundColor: Colors.blue,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.grey[300],
+              items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: "Setting",
+                ),
+              ],
+            ),
           ),
         ),
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

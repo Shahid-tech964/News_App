@@ -45,6 +45,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   url_launcher: ^6.3.2
+  flutter_bloc: ^9.1.1
+  carousel_slider: ^5.1.1
 
 dev_dependencies:
   flutter_test:

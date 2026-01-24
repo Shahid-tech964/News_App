@@ -141,12 +141,7 @@ Bookmarks remain saved even after restarting the app.
 
 <hr/>
 
-<h2>👨‍💻 Author</h2>
-<p>
-<b>Tushar Dhir</b>  
-<br/>
-Flutter Developer
-</p>
+
 
 <hr/>
 

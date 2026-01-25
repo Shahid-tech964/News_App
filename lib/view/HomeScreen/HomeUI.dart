@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Top HeadLines", style: TextStyle(fontSize: 18)),
+                    Padding( padding: EdgeInsetsGeometry.only(left: 10), child: Text("Top HeadLines", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold))),
 
                     Expanded(child: Image_Slider()),
                   ],

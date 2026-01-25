@@ -4,11 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:news_app/bloc/events/NewsEvent.dart';
 import 'package:news_app/bloc/states/NewsState.dart';
 import 'package:news_app/model/remote/apiModel/Model.dart';
+import 'package:news_app/model/repository/entertainment_repo.dart';
 import 'package:news_app/model/repository/headlineRepo.dart';
 
-class Headlinebloc extends Bloc<Newsevent, NewsState> {
-  final HeadlineRepo _headlineRepo = HeadlineRepo();
-  Headlinebloc() : super(InitialState()) {
+class Entertainmentbloc extends Bloc<Newsevent,NewsState> {
+  final EntertainmentRepo _headlineRepo = EntertainmentRepo();
+ Entertainmentbloc() : super(InitialState()) {
     on<FetchApiNewsEvent>((event, emit) async {
       try {
         List<Articles> list = await _headlineRepo.getresponse();

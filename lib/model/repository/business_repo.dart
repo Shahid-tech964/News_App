@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:news_app/model/remote/apiModel/Model.dart';
-import 'package:news_app/model/remote/apiService/headlineApiService.dart';
+import 'package:news_app/model/remote/apiService/bussinessApiService.dart';
 
-class HeadlineRepo {
-  final HeadlineApiService _headlineApiservice = HeadlineApiService();
+class BusinessRepo {
+  final Bussinessapiservice _bussinessapiservice = Bussinessapiservice();
   final List<Articles> _list = [];
 
   Future<List<Articles>> getresponse() async {
-    final response = await _headlineApiservice.response();
+    final response = await _bussinessapiservice.response();
 
     if (response.statusCode == 200) {
       dynamic map = jsonDecode(response.body);

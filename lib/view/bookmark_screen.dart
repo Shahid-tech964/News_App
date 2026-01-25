@@ -8,7 +8,6 @@ import 'package:news_app/view/detail_screen.dart';
 
 import 'package:flutter/material.dart';
 
-
 class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
 
@@ -17,8 +16,6 @@ class BookmarkScreen extends StatefulWidget {
 }
 
 class _BookmarkScreenState extends State<BookmarkScreen> {
-  
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<Hivebloc, HiveState>(
@@ -50,33 +47,54 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                     ),
                   );
                 },
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 120,
-                  child: Card(
-                    elevation: 4,
+                child: Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: Container(
+                    height: 100,
+                    width: double.infinity,
                     child: Row(
                       children: [
-                        Expanded(
-                          child: Image.network(
-                            items[index].imgurl ?? "",
-                            fit: BoxFit.cover,
+                        SizedBox(
+                          height: 100,
+                          width: 150,
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.circular(7),
+                            child: Image.network(
+                              items[index].imgurl ?? "",
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 10),
+
+                        SizedBox(width: 15),
                         Expanded(
+                          flex: 2,
                           child: Text(
                             items[index].title ?? "",
-                            style: const TextStyle(fontSize: 15),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            context.read<Hivebloc>().add(
-                              DeleteitemEvent(indx: index)
-                            );
-                          },
-                          icon: const Icon(Icons.delete),
+                        Expanded(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () {
+                              context.read<Hivebloc>().add(
+                                DeleteitemEvent(indx: index),
+                              );
+                            },
+                            icon: const Icon(Icons.delete),
+                          ),
                         ),
                       ],
                     ),

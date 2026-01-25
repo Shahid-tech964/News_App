@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/HiveBloc.dart';
+
 import 'package:news_app/bloc/bloc_class/headlineBloc.dart';
-import 'package:news_app/bloc/events/headlineEvent.dart';
-import 'package:news_app/bloc/states/HeadlineState.dart';
+import 'package:news_app/bloc/events/NewsEvent.dart';
+import 'package:news_app/bloc/states/NewsState.dart';
 import 'package:news_app/model/remote/apiModel/Model.dart';
 import 'package:news_app/view/detail_screen.dart';
 
@@ -22,13 +22,13 @@ class _Image_SliderState extends State<Image_Slider> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<Headlinebloc>().add(FetchApiHeadlineEvent());
+    context.read<Headlinebloc>().add(FetchApiNewsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
-      child: BlocBuilder<Headlinebloc, HeadlineState>(
+      child: BlocBuilder<Headlinebloc, NewsState>(
         builder: (_, state) {
           if (state is Success) {
             List<Articles> data = state.data;
@@ -64,7 +64,7 @@ class _Image_SliderState extends State<Image_Slider> {
                               ClipRRect(
                                 borderRadius: BorderRadiusGeometry.circular(10),
                                 child: Image.network(
-                                  item.urlToImage ?? "",
+                                  item.urlToImage ?? "https://dummyimage.com/300x200/cccccc/000000&text=Image+Not+Available",
                                   fit: BoxFit.cover,
                                   width: double.infinity,
                                   height: double.infinity,

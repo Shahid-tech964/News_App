@@ -1,7 +1,5 @@
-import 'package:hive/hive.dart';
 import 'package:news_app/model/local/HIveServices.dart';
 import 'package:news_app/model/local/Hive_Model.dart';
-import 'package:news_app/model/remote/apiModel/Model.dart';
 
 class HiveRepo {
   final HiveService _hiveService = HiveService();

@@ -1,17 +1,17 @@
 import 'package:http/http.dart';
 import 'package:news_app/model/remote/apiModel/Model.dart';
 
-abstract class HeadlineState {}
+abstract class NewsState {}
 
-class InitialState extends HeadlineState{}
+class InitialState extends NewsState {}
 
-class Success extends HeadlineState {
+class Success extends NewsState  {
   List<Articles> data = [];
   Success({required this.data});
 }
 
 
-class Error  extends HeadlineState {
+class Error  extends NewsState  {
    String? message;
   Error({required this.message});
 }

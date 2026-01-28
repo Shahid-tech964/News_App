@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:news_app/bloc/events/NewsEvent.dart';
 import 'package:news_app/bloc/states/NewsState.dart';
 import 'package:news_app/model/remote/apiModel/Model.dart';
 import 'package:news_app/model/repository/entertainment_repo.dart';
-import 'package:news_app/model/repository/headlineRepo.dart';
 
 class Entertainmentbloc extends Bloc<Newsevent,NewsState> {
   final EntertainmentRepo _headlineRepo = EntertainmentRepo();

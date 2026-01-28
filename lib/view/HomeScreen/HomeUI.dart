@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/headlineBloc.dart';
 import 'package:news_app/view/HomeScreen/Slider.dart';
 import 'package:news_app/view/HomeScreen/TabBar.dart';
 

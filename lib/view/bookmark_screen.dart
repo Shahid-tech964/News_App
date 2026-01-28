@@ -52,7 +52,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7),
                   ),
-                  child: Container(
+                  child: SizedBox(
                     height: 100,
                     width: double.infinity,
                     child: Row(
@@ -73,10 +73,10 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
 
                         SizedBox(width: 15),
                         Expanded(
-                          flex: 2,
+                          
                           child: Text(
                             items[index].title ?? "",
-                            maxLines: 4,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.black,
@@ -85,17 +85,16 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: IconButton(
+                        
+                          IconButton(
                             onPressed: () {
                               context.read<Hivebloc>().add(
                                 DeleteitemEvent(indx: index),
                               );
                             },
-                            icon: const Icon(Icons.delete),
+                            icon: const Icon(Icons.delete,size: 40,),
                           ),
-                        ),
+                        
                       ],
                     ),
                   ),

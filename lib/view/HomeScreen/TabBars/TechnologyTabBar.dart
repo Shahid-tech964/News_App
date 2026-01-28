@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/businessbloc.dart';
 import 'package:news_app/bloc/bloc_class/technologybloc.dart';
 import 'package:news_app/bloc/events/NewsEvent.dart';
 import 'package:news_app/bloc/states/NewsState.dart';
@@ -56,7 +55,7 @@ class _TechnologytabbarState extends State<Technologytabbar> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 100,
                         width: double.infinity,
                         child: Row(

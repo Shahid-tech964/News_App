@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:news_app/model/local/Hive_Model.dart';
-import 'package:news_app/model/remote/apiModel/Model.dart';
 
 class HiveService {
   static const String _boxName = 'HiveArticle';

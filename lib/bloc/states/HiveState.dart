@@ -1,5 +1,4 @@
 import 'package:news_app/model/local/Hive_Model.dart';
-import 'package:news_app/model/remote/apiModel/Model.dart';
 
 class HiveState {}
 

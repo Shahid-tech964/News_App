@@ -55,7 +55,7 @@ class _BusinesstabbarState extends State<Businesstabbar> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7),
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 100,
                         width: double.infinity,
                         child: Row(

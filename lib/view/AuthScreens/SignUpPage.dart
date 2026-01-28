@@ -1,0 +1,258 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/bloc/bloc_class/AuthBloc/ButtonValidationBloc.dart';
+
+import 'package:news_app/bloc/bloc_class/AuthBloc/SignUpBloc.dart';
+import 'package:news_app/bloc/bloc_class/AuthBloc/ValidationBloc.dart';
+
+import 'package:news_app/bloc/events/AuthEvents/ButtonValidationEvent.dart';
+import 'package:news_app/bloc/events/AuthEvents/FirebaseAuthEvent.dart';
+import 'package:news_app/bloc/events/AuthEvents/ValidationEvent.dart';
+
+import 'package:news_app/bloc/states/AuthStates/ButtonValidationState.dart';
+import 'package:news_app/bloc/states/AuthStates/ValidationState.dart';
+
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  static const Color primaryBlue = Color(0xFF1976D2);
+  static const Color lightGrey = Color(0xFFF5F5F5);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<SignUpButtonValidationBloc>().add(
+      ButtonEnableDisableEvent(
+        email: emailController.text,
+        password: passwordController.text,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Sign Up",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 40),
+
+            // Email
+            TextField(
+              onChanged: (email) {
+                context.read<SignUpEmailValidationbloc>().add(
+                  EmailValidationEvent(email: email),
+                );
+                context.read<SignUpButtonValidationBloc>().add(
+                  ButtonEnableDisableEvent(
+                    email: email,
+                    password: passwordController.text,
+                  ),
+                );
+              },
+              controller: emailController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: lightGrey,
+                hintText: "E-Mail",
+                prefixIcon: const Icon(
+                  Icons.email_outlined,
+                  color: primaryBlue,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+
+            
+
+            BlocBuilder<SignUpEmailValidationbloc, EmailValidationState>(
+              builder: (_, state) {
+                if (state is InValidEmail) {
+                  return Text(
+                    state.message ?? "",
+                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                  );
+                } else if (state is ValidEmail) {
+                  return Text(
+                    state.message ?? "",
+                    style: const TextStyle(color: Colors.green, fontSize: 13),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+
+            const SizedBox(height: 16),
+
+            // Password
+            TextField(
+              onChanged: (password) {
+                context.read<SignUpPasswordValidationBloc>().add(
+                  PasswordValidationEvent(password: password),
+                );
+                context.read<SignUpButtonValidationBloc>().add(
+                  ButtonEnableDisableEvent(
+                    email: emailController.text,
+                    password: password,
+                  ),
+                );
+              },
+              controller: passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: lightGrey,
+                hintText: "Password",
+                prefixIcon: const Icon(Icons.lock_outline, color: primaryBlue),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+
+            BlocBuilder<SignUpPasswordValidationBloc, PasswordValidationState>(
+              builder: (_, state) {
+                if (state is InValidPassword) {
+                  return Text(
+                    state.message ?? "",
+                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                  );
+                } else if (state is ValidPassword) {
+                  return Text(
+                    state.message ?? "",
+                    style: const TextStyle(color: Colors.green, fontSize: 13),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+
+            const SizedBox(height: 30),
+
+            // Sign Up Button
+            BlocBuilder<
+              SignUpButtonValidationBloc,
+              SignUpButtonvalidationstate
+            >(
+              builder: (_, state) {
+                if (state is SignUpEnableState) {
+                  return SizedBox(
+                    height: 50,
+                    width: 180,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<Signupbloc>().add(
+                          SigUpEvent(
+                            email: state.email,
+                            password: state.password,
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (state is SignUpDisableState) {
+                  return SizedBox(
+                    height: 50,
+                    width: 180,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            // Navigate to Sign In
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Already have an account? ",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Sign In",
+                    style: TextStyle(
+                      color: primaryBlue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

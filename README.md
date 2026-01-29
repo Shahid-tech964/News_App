@@ -11,9 +11,7 @@ The app is built using <b>BLoC</b> for state management, <b>MVVM</b> architectur
 
 <h2>🎥 App Demo</h2>
 
-<p align="center">
-  <video src="assets/news_app_demo.mp4" width="320" controls></video>
-</p>
+https://github.com/user-attachments/assets/09f42ba1-97f8-4eb5-b6ad-bee19875b86f
 
 <p align="center">
   <i>Short demo showing authentication, news feed, article details, and bookmarks.</i>

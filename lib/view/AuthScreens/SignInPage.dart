@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/AuthBloc/ButtonValidationBloc.dart';
-import 'package:news_app/bloc/bloc_class/AuthBloc/SignInBloc.dart';
-import 'package:news_app/bloc/bloc_class/AuthBloc/ValidationBloc.dart';
-import 'package:news_app/bloc/events/AuthEvents/ButtonValidationEvent.dart';
-import 'package:news_app/bloc/events/AuthEvents/FirebaseAuthEvent.dart';
-import 'package:news_app/bloc/events/AuthEvents/ValidationEvent.dart';
-import 'package:news_app/bloc/states/AuthStates/ButtonValidationState.dart';
-import 'package:news_app/bloc/states/AuthStates/ValidationState.dart';
+import 'package:news_app/viewmodel/bloc_class/AuthBloc/ButtonValidationBloc.dart';
+import 'package:news_app/viewmodel/bloc_class/AuthBloc/SignInBloc.dart';
+import 'package:news_app/viewmodel/bloc_class/AuthBloc/ValidationBloc.dart';
+import 'package:news_app/viewmodel/events/AuthEvents/ButtonValidationEvent.dart';
+import 'package:news_app/viewmodel/events/AuthEvents/FirebaseAuthEvent.dart';
+import 'package:news_app/viewmodel/events/AuthEvents/ValidationEvent.dart';
+import 'package:news_app/viewmodel/states/AuthStates/ButtonValidationState.dart';
+import 'package:news_app/viewmodel/states/AuthStates/ValidationState.dart';
 import 'package:news_app/view/AuthScreens/SignUpPage.dart';
 
 class SignInPage extends StatefulWidget {
@@ -34,6 +34,8 @@ class _SignInPageState extends State<SignInPage> {
         password: passwordController.text,
       ),
     );
+    context.read<SignINEmailValidationbloc>().add(ResetValidationEvent());
+    context.read<SignInPasswordValidationBloc>().add(ResetValidationEvent());
   }
 
   @override
@@ -51,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          
+
           children: [
             const Text(
               "Sign In",
@@ -92,18 +94,25 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
 
-            
             BlocBuilder<SignINEmailValidationbloc, EmailValidationState>(
               builder: (_, state) {
-                if (state is InValidEmail) {
-                  return Text(
-                    state.message ?? "",
-                    style: TextStyle(color: Colors.red, fontSize: 13),
+                if (state is InitialEmailValidationState) {
+                  return Text("");
+                } else if (state is InValidEmail) {
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.red, fontSize: 13),
+                    ),
                   );
                 } else if (state is ValidEmail) {
-                  return Text(
-                    state.message ?? "",
-                    style: TextStyle(color: Colors.green, fontSize: 13),
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.green, fontSize: 13),
+                    ),
                   );
                 } else {
                   return Container();
@@ -142,15 +151,23 @@ class _SignInPageState extends State<SignInPage> {
 
             BlocBuilder<SignInPasswordValidationBloc, PasswordValidationState>(
               builder: (_, state) {
-                if (state is InValidPassword) {
-                  return Text(
-                    state.message ?? "",
-                    style: TextStyle(color: Colors.red, fontSize: 13),
+                if (state is InitialPasswordValidationState) {
+                  return Text("");
+                } else if (state is InValidPassword) {
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.red, fontSize: 13),
+                    ),
                   );
                 } else if (state is ValidPassword) {
-                  return Text(
-                    state.message ?? "",
-                    style: TextStyle(color: Colors.green, fontSize: 13),
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.green, fontSize: 13),
+                    ),
                   );
                 } else {
                   return Container();
@@ -203,7 +220,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey,
+                        backgroundColor: Colors.blue[200],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

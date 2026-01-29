@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/bloc/bloc_class/HiveBloc.dart';
-import 'package:news_app/bloc/events/HIveEvents.dart';
+import 'package:news_app/viewmodel/bloc_class/HiveBloc.dart';
+import 'package:news_app/viewmodel/events/HIveEvents.dart';
 
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';

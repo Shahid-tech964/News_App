@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/HiveBloc.dart';
-import 'package:news_app/bloc/events/HIveEvents.dart';
-import 'package:news_app/bloc/states/HiveState.dart';
+import 'package:news_app/viewmodel/bloc_class/HiveBloc.dart';
+import 'package:news_app/viewmodel/events/HIveEvents.dart';
+import 'package:news_app/viewmodel/states/HiveState.dart';
 import 'package:news_app/model/local/Hive_Model.dart';
 
 import 'package:news_app/view/detail_screen.dart';
@@ -80,7 +80,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -92,7 +92,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                 DeleteitemEvent(indx: index),
                               );
                             },
-                            icon: const Icon(Icons.delete,size: 40,),
+                            icon: const Icon(Icons.delete,size: 25,),
                           ),
                         
                       ],

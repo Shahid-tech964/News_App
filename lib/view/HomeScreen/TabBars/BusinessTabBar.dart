@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/businessbloc.dart';
-import 'package:news_app/bloc/events/NewsEvent.dart';
-import 'package:news_app/bloc/states/NewsState.dart';
+import 'package:news_app/viewmodel/bloc_class/businessbloc.dart';
+import 'package:news_app/viewmodel/events/NewsEvent.dart';
+import 'package:news_app/viewmodel/states/NewsState.dart';
 import 'package:news_app/model/remote/apiModel/Model.dart';
 import 'package:news_app/view/detail_screen.dart';
 

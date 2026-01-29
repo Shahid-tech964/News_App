@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/bloc/bloc_class/AuthBloc/ButtonValidationBloc.dart';
+import 'package:news_app/viewmodel/bloc_class/AuthBloc/ButtonValidationBloc.dart';
 
-import 'package:news_app/bloc/bloc_class/AuthBloc/SignUpBloc.dart';
-import 'package:news_app/bloc/bloc_class/AuthBloc/ValidationBloc.dart';
+import 'package:news_app/viewmodel/bloc_class/AuthBloc/SignUpBloc.dart';
+import 'package:news_app/viewmodel/bloc_class/AuthBloc/ValidationBloc.dart';
 
-import 'package:news_app/bloc/events/AuthEvents/ButtonValidationEvent.dart';
-import 'package:news_app/bloc/events/AuthEvents/FirebaseAuthEvent.dart';
-import 'package:news_app/bloc/events/AuthEvents/ValidationEvent.dart';
+import 'package:news_app/viewmodel/events/AuthEvents/ButtonValidationEvent.dart';
+import 'package:news_app/viewmodel/events/AuthEvents/FirebaseAuthEvent.dart';
+import 'package:news_app/viewmodel/events/AuthEvents/ValidationEvent.dart';
 
-import 'package:news_app/bloc/states/AuthStates/ButtonValidationState.dart';
-import 'package:news_app/bloc/states/AuthStates/ValidationState.dart';
+import 'package:news_app/viewmodel/states/AuthStates/ButtonValidationState.dart';
+import 'package:news_app/viewmodel/states/AuthStates/ValidationState.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -35,6 +35,8 @@ class _SignUpPageState extends State<SignUpPage> {
         password: passwordController.text,
       ),
     );
+    context.read<SignUpEmailValidationbloc>().add(ResetValidationEvent());
+    context.read<SignUpPasswordValidationBloc>().add(ResetValidationEvent());
   }
 
   @override
@@ -92,19 +94,25 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
 
-            
-
             BlocBuilder<SignUpEmailValidationbloc, EmailValidationState>(
               builder: (_, state) {
-                if (state is InValidEmail) {
-                  return Text(
-                    state.message ?? "",
-                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                if(state is InitialEmailValidationState) {
+                  return Text("");
+                } else if (state is InValidEmail) {
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.red, fontSize: 13),
+                    ),
                   );
                 } else if (state is ValidEmail) {
-                  return Text(
-                    state.message ?? "",
-                    style: const TextStyle(color: Colors.green, fontSize: 13),
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.green, fontSize: 13),
+                    ),
                   );
                 } else {
                   return Container();
@@ -143,15 +151,23 @@ class _SignUpPageState extends State<SignUpPage> {
 
             BlocBuilder<SignUpPasswordValidationBloc, PasswordValidationState>(
               builder: (_, state) {
-                if (state is InValidPassword) {
-                  return Text(
-                    state.message ?? "",
-                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                if (state is InitialPasswordValidationState) {
+                  return Text("");
+                } else if (state is InValidPassword) {
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.red, fontSize: 13),
+                    ),
                   );
                 } else if (state is ValidPassword) {
-                  return Text(
-                    state.message ?? "",
-                    style: const TextStyle(color: Colors.green, fontSize: 13),
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.message ?? "",
+                      style: TextStyle(color: Colors.green, fontSize: 13),
+                    ),
                   );
                 } else {
                   return Container();
@@ -204,7 +220,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey,
+                        backgroundColor: Colors.blue[200],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

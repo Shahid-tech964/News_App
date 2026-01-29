@@ -9,14 +9,27 @@ The app is built using <b>BLoC</b> for state management, <b>MVVM</b> architectur
 
 <hr/>
 
+<h2>🎥 App Demo</h2>
+
+<p align="center">
+  <video src="assets/news_app_demo.mp4" width="320" controls></video>
+</p>
+
+<p align="center">
+  <i>Short demo showing authentication, news feed, article details, and bookmarks.</i>
+</p>
+
+<hr/>
+
 <h2>🚀 Features</h2>
 <ul>
   <li>Fetch latest news headlines using REST API</li>
   <li>Image carousel slider for top headlines</li>
+  <li>Email & Password authentication (Firebase Auth)</li>
   <li>Bookmark news articles (offline support)</li>
   <li>Delete bookmarked articles</li>
   <li>Clean UI with smooth navigation</li>
-  <li>Error and loading state handling</li>
+  <li>Loading and error state handling using BLoC</li>
 </ul>
 
 <hr/>
@@ -26,6 +39,7 @@ The app is built using <b>BLoC</b> for state management, <b>MVVM</b> architectur
   <li><b>Flutter</b></li>
   <li><b>BLoC</b> (State Management)</li>
   <li><b>MVVM Architecture</b></li>
+  <li><b>Firebase Authentication</b> (Email & Password)</li>
   <li><b>Hive</b> (Local Database)</li>
   <li><b>REST API</b></li>
   <li><b>NewsAPI (newsorg)</b></li>
@@ -60,9 +74,6 @@ lib/
 Website: https://newsapi.org/
 </p>
 
-<p>
-You need to generate your own API key and add it to the project.
-</p>
 
 <hr/>
 
@@ -117,6 +128,7 @@ Bookmarks remain saved even after restarting the app.
 <ul>
   <li>API fetching</li>
   <li>Loading and error states</li>
+  <li>Firebase authentication states</li>
   <li>Local Hive operations</li>
 </ul>
 
@@ -124,6 +136,7 @@ Bookmarks remain saved even after restarting the app.
 
 <h2>📸 Screens</h2>
 <ul>
+  <li>Login & Signup Screen</li>
   <li>Home Screen (Top Headlines)</li>
   <li>News Detail Screen</li>
   <li>Bookmark Screen</li>
@@ -133,15 +146,35 @@ Bookmarks remain saved even after restarting the app.
 
 <h2>📌 Future Improvements</h2>
 <ul>
-  <li>Search news functionality</li>
-  <li>Category-wise news</li>
-  <li>Dark mode</li>
-  <li>Pagination</li>
+  <li>UI/UX enhancements with modern theming and animations</li>
+  <li>Light & Dark mode support with dynamic theming</li>
+  <li>Improved exception handling with user-friendly error messages</li>
+  <li>Network connectivity detection and offline state handling</li>
+  <li>News-related chatbot for article summaries and recommendations</li>
+  <li>Better app security (API key protection, improved auth flow)</li>
+  <li>Performance optimization and code refactoring</li>
+  <li>Pagination and infinite scrolling</li>
+  <li>Category-wise and search-based news filtering</li>
+  <li>iOS support and platform-specific UI improvements</li>
 </ul>
 
 <hr/>
 
+<h2>🤝 Contributing</h2>
+<p>
+Contributions are welcome!  
+If you have ideas for improvements, bug fixes, or new features:
+</p>
+<ul>
+  <li>Fork the repository</li>
+  <li>Create a new branch</li>
+  <li>Make your changes</li>
+  <li>Submit a pull request</li>
+</ul>
 
+<p>
+All contributions that improve code quality, performance, or user experience are appreciated.
+</p>
 
 <hr/>
 

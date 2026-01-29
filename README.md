@@ -93,15 +93,8 @@ git clone https://github.com/Shahid-tech964/News_App.git
 flutter pub get
 </pre>
 
+
 <ol start="3">
-  <li>Add your NewsAPI key</li>
-</ol>
-
-<p>
-Update the API key inside your API service file.
-</p>
-
-<ol start="4">
   <li>Run the app</li>
 </ol>
 

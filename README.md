@@ -1,4 +1,4 @@
-<h1>📰 Flutter News App</h1>
+<h1>📰 NewsHub</h1>
 
 <p>
 A simple and clean <b>Flutter News Application</b> that fetches the latest news using the
